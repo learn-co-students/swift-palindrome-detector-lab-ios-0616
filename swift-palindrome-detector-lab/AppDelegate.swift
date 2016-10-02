@@ -10,37 +10,82 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+    
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        var stringIsPalindromeVar = stringIsPalindrome("racecar")
+        print("Testing(1) if  * \("racecar") * is a \(stringIsPalindromeVar) palindrome.")
+        
+        stringIsPalindromeVar = stringIsPalindrome("racecars")
+        print("Testing(2) if * \("racecars") * is a \(stringIsPalindromeVar) palindrome.")
+        
+        stringIsPalindromeVar = stringIsPalindrome("Kanakanak")
+        print("Testing(3) if * \("Kanakanak") * with mixed upper and lowercase letters is \(stringIsPalindromeVar) palindrome.")
+        
+        stringIsPalindromeVar = stringIsPalindrome("never odd or even")
+        print("Testing(4) if * \("never odd or even") * string contaning spaces is \(stringIsPalindromeVar) palindrome.")
+        
+        stringIsPalindromeVar = stringIsPalindrome("this is not a palindrome")
+        print("Testing(5) if * \("this is not a palindrome") * string contaning spaces is \(stringIsPalindromeVar) palindrome.")
+        
+        
+        var stringByReversing =  stringByReversingString("racecars")
+        print("The reversed * \("racecars") * string is '\(stringByReversing)'.")
+        
+        stringByReversing =  stringByReversingString("racecar")
+        print("The reversed * \("racecar") * string is '\(stringByReversing)'.")
+        
+        var removedSpaceAndPunctuation = stringIsPalindrome("Flee to me, remote elf?")
+        //print(removeWhightspaceAndPunctuation("Sentence * \("Flee to me, remote elf.") * after whightspace and punctuation removed:\(removedSpaceAndPunctuation)"))
+        
+        removedSpaceAndPunctuation = stringIsPalindrome("Norma is as selfless as I am, Ron.")
+        //print(removeWhightspaceAndPunctuation("Sentence: * \("Norma is as selfless as I am, Ron.") * after whightspace and punctuation removed:\(removedSpaceAndPunctuation)"))
+        
+        removedSpaceAndPunctuation = stringIsPalindrome("No sir! Away! A papaya war is on.")
+        //print(removeWhightspaceAndPunctuation("Sentence: * \("No sir! Away! A papaya war is on.") * after whightspace and punctuation removed:\(removedSpaceAndPunctuation)"))
+        
+        return false
+    }
+    
+    
+    
+    func stringIsPalindrome(string: String) -> Bool {
+        let punctuationOffString = removeWhightspaceAndPunctuation(string)
+        let stringToCheck = stringByReversingString(punctuationOffString)
+        
+        if stringToCheck == punctuationOffString {
+            print("true")
         return true
+        } else {
+            print("false")
+            return false
+        }
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    
+    
+    func stringByReversingString(string: String) -> String {
+        
+        var reversedString = ""
+        for character in string.lowercaseString.characters {
+            reversedString.insert(character, atIndex: reversedString.startIndex)
+        }
+        print("'\(reversedString)' is a string we got by reversing string '\(string)'.")
+        return reversedString
     }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    
+    
+    func removeWhightspaceAndPunctuation(string: String) -> String {
+        let punctuationArray = [" " ,"." ,"," ,":" , "!", "?"]
+        var reversedWhitespaceRemovedString = string.lowercaseString
+        for i in 0...(punctuationArray.count) - 1 {
+            reversedWhitespaceRemovedString = reversedWhitespaceRemovedString.stringByReplacingOccurrencesOfString(punctuationArray[i], withString:"")
+        }
+        print("Sentence: '\(string)' with removed punctuation: '\(reversedWhitespaceRemovedString)'")
+        return reversedWhitespaceRemovedString
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
-
 }
-
